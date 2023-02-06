@@ -1,4 +1,4 @@
-# Making the domain decomposition X library highly performing
+# Making the domain decomposition X library highly performing - Google Summer School of Code 2023
 
 In our research group, we have developed a library for performing
 numerical simulation of the solvents in computational chemistry and
@@ -107,7 +107,7 @@ This is an advantage, as the project can still be considered a success
 even if one work package is not completed. As a consequence, the project
 particularly robust against unexpected difficulties.
 
-**Mentor:** Michele Nottoli (michele.nottoli@mathematik.uni-stuttgart.de)
+**Mentor:** [Michele Nottoli](https://github.com/mnottoli) (michele.nottoli@mathematik.uni-stuttgart.de)
 
 **Prerequisites:** interest in scientific computing and high performance
 computing. Basic knowledge of Fortran, OpenMP and CUDA can be helpful
