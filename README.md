@@ -29,7 +29,7 @@ The computational modeling of molecular systems is a complex task:
 
 ### The multiscale solution
 
-One of the strategy to deal with this kind of systems is to use
+One of the strategies to deal with this kind of systems is to use
 **focused models**, in which the interesting region is described in great
 accuracy and the rest of the environment is treated with cheaper
 models. [^1]
@@ -40,7 +40,7 @@ characterized only by a few electrostatic properties such as the
 it. [^2]
 
 In this case, the modeling problem is turned into a **classical
-electrostatic problem** which can be tackled by using the Maxwell
+electrostatic problem** which can be tackled using the Maxwell
 equations.
 
 Depending on the dielectric constant and ion concentration we
@@ -62,15 +62,14 @@ complicated thus making the problem difficult.
 
 In the domain decomposition strategy the global problems are recast as
 a collection of individual, simpler problems, each of them defined on a
-given atom of the solute. These can be easily discretized such that the
+given atom of the solute. These can be easily discretized, and the
 original problem is transformed in a linear system in the form
 
     L x = f
 
-where L is a matrix depending on the geometry of the system, x is
-the desired solution and f is a known right hand side which depend on
-the geometry and on the kind of atoms that compose the solvated
-molecule. [^3]
+where L is a matrix which dependes on the geometry of the system, x is
+the desired solution and f is a known right hand side which depends on
+the geometry and on the kind of atoms that make up the solute. [^3]
 
 Once x is known, the effect of the solvent on the solvated molecule is
 fully described.
@@ -79,10 +78,15 @@ fully described.
 
 In the domain decomposition X library (ddX), we have implemented
 numerical methods to solve the COSMO, PCM and LPB problems in a
-domain decomposition fashion. Furthermore, we have also implemented
+**domain decomposition** fashion. Furthermore, we have also implemented
 all the common framework between the three models as well as APIs
 to couple this library with other software packages used in
 computational chemistry and biochemistry.
+
+Particular care was given to make everything linear scaling in the
+number of atoms of the system. To achieve this we had also to
+implement a custom **fast multipole method** library which is part
+of the ddX library.
 
 The library is written in Fortran, with particular care for an efficient
 implementation. The APIs are exposed to Fortran, to C and to Python.
@@ -100,12 +104,12 @@ performant would allow simulating huge biological systems, such as
 entire viruses, as well as running the calculation on high performance
 computer clusters.
 
-The generic goal of optimizing the ddX library can be achieved in
-several ways, for this reason we organized the project as three
+The generic goal of optimizing the ddX library can be achieved by acting
+in several directions, for this reason we organized the project as three
 independent work packages.
 This is an advantage, as the project can still be considered a success
 even if one work package is not completed. As a consequence, the project
-particularly robust against unexpected difficulties.
+is particularly robust against unexpected difficulties.
 
 **Mentor:** [Michele Nottoli](https://github.com/mnottoli) (michele.nottoli@mathematik.uni-stuttgart.de)
 
@@ -158,7 +162,7 @@ writes are avoid and a clean OpenMP parallelization is possible.
 
 ### Work package 3: CUDA for ddX
 
-**Duration:** 100 hours
+**Duration:** 150 hours
 
 **Difficulty:** medium
 
@@ -178,7 +182,7 @@ the same time. At the moment we have parallelized this code using
 OpenMP with good results. However, a parallelization using GPUs has
 never been tried.
 
-**Goal:** Writing a module for the ddX library which uses CUDA to
+**Goal:** Writing a module for the ddX library which uses **CUDA** to
 accelerate ddCOSMO. This is achieved through the following steps:
   - identifying the critical arrays which should be stored in the GPU,
   - writing a CUDA kernel code for atom-atom interaction required by the
