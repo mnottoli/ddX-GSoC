@@ -1,4 +1,4 @@
-# Making the domain decomposition X library highly performing - Google Summer School of Code 2023
+# Making the domain decomposition X library highly performant - Google Summer School of Code 2023
 
 In our research group, we have developed a library for performing
 numerical simulation of the solvents in computational chemistry and
