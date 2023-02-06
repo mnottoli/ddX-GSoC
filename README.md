@@ -7,9 +7,9 @@ handle in a very efficient way classical electrostatic problems.
 The library is released under the LGPL-3.0 license on GitHub:
 https://github.com/ddsolvation/ddX.
 
-In this brief page we present a project for the Google Summer School
+In this brief page, we present a project for the Google Summer School
 of Code, together with a bit of context to fully grasp what we are
-doing. First we present the modeling problem at the heart,
+doing. First, we present the modeling problem at the heart,
 then the library itself, and only at the end we present the project
 ideas.
 
@@ -20,12 +20,12 @@ ideas.
 The computational modeling of molecular systems is a complex task:
   - accurate models based on **quantum mechanics** have a steeply
   scaling computational cost in the number of atoms in the system: their
-  application is only possible on system with **less than a few
-  hundred atoms**
+  application is only possible on systems with **less than a few
+  hundreds atoms**
   - most of the interesting chemistry and biochemistry happened in
   **condensed phase**, where the interesting molecule is surrounded by
   other molecules which influence its properties: a proper modeling
-  need to take into account **more than a few hundred atoms**
+  need to take into account **more than a few hundreds atoms**
 
 ### The multiscale solution
 
@@ -35,7 +35,7 @@ accuracy and the rest of the environment is treated with cheaper
 models. [^1]
 
 In particular, the environment can be described as a continuum medium
-characterized only by a few electrostatic properties such as the
+characterized only by a few electrostatic properties, such as the
 **polarizability** of the medium and the **ion concentration** in
 it. [^2]
 
@@ -43,7 +43,7 @@ In this case, the modeling problem is turned into a **classical
 electrostatic problem** which can be tackled using the Maxwell
 equations.
 
-Depending on the dielectric constant and ion concentration we
+Depending on the dielectric constant and ion concentration, we
 distinguish three different models:
   - Infinite dielectric constant: **COSMO** (conductor like screening
   model)
@@ -58,17 +58,17 @@ An innovative idea to solve this kind of electrostatic problems is to
 use the **domain decomposition** technique. In general, the equations
 involved are quite simple and well known in the mathematical literature,
 but at the same time, the domain on which they are defined are rather
-complicated thus making the problem difficult.
+complicated, thus making the problem difficult.
 
-In the domain decomposition strategy the global problems are recast as
+In the domain decomposition strategy, the global problems are recast as
 a collection of individual, simpler problems, each of them defined on a
 given atom of the solute. These can be easily discretized, and the
 original problem is transformed in a linear system in the form
 
     L x = f
 
-where L is a matrix which dependes on the geometry of the system, x is
-the desired solution and f is a known right hand side which depends on
+where L is a matrix which depends on the geometry of the system, x is
+the desired solution and f is a known right-hand side which depends on
 the geometry and on the kind of atoms that make up the solute. [^3]
 
 Once x is known, the effect of the solvent on the solvated molecule is
@@ -84,7 +84,7 @@ to couple this library with other software packages used in
 computational chemistry and biochemistry.
 
 Particular care was given to make everything linear scaling in the
-number of atoms of the system. To achieve this we had also to
+number of atoms of the system. To achieve this, we had also to
 implement a custom **fast multipole method** library which is part
 of the ddX library.
 
@@ -94,7 +94,7 @@ implementation. The APIs are exposed to Fortran, to C and to Python.
 ## Project
 
 The three methods implemented by the ddX library have already proved
-to be accurate and fast. In particular the domain decomposition COSMO is
+to be accurate and fast. In particular, the domain decomposition COSMO is
 the fastest code in the world able to fully characterize a polarizable
 solvent.
 
@@ -125,9 +125,9 @@ to learn new things.
 **Difficulty:** easy
 
 **Context:**
-The library requires to compute electrostatic properties from all the
+the library requires computing electrostatic properties from all the
 atoms to all the atoms. This operation is in principle quadratically
-scaling, however it is possible to use the **fast multipole method**
+scaling, however, it is possible to use the **fast multipole method**
 to compute electrostatic properties in a linear scaling time.
 
 In our library, we have an in house implementation of the fast multipole
@@ -135,7 +135,7 @@ method particularly optimized to handle spherical harmonics. Our
 implementation however is not yet parallelized to take advantage of
 multiple threads.
 
-**Goal:** Restructuring some FMM operations in such a way that
+**Goal:** restructuring some FMM operations in such a way that
 concurrent writes are avoided, and then using **OpenMP directives** to
 parallelize the for loops.
 
@@ -145,20 +145,20 @@ parallelize the for loops.
 
 **Difficulty:** easy
 
-**Context:** For some operations, which go beyond the most basic usage
+**Context:** for some operations, which go beyond the most basic usage
 of ddX, it is necessary to solve the adjoint linear system
 
     L^T y = g
 
-During the years most of the optimization effort was spent on the
+During the years, most of the optimization effort was spent on the
 forward linear system, with the outcome that solving the adjoint
 linear system requires more time with respect to the forward one despite
 involving roughly the same number of operations.
 
-**Goal:** Rewriting the operations required to perform an adjoint matrix
+**Goal:** rewriting the operations required to perform an adjoint matrix
 vector product in a different order such that fully benefits from
 vectorization, rewriting the operations in such a way that concurrent
-writes are avoid and a clean OpenMP parallelization is possible.
+writes are avoided and a clean OpenMP parallelization is possible.
 
 ### Work package 3: CUDA for ddX
 
@@ -167,7 +167,7 @@ writes are avoid and a clean OpenMP parallelization is possible.
 **Difficulty:** medium
 
 **Context:**
-The linear systems of the form
+linear systems of the form
 
     LX = f
 
@@ -177,12 +177,12 @@ memory, but on the other hand, requires fast code which is able to
 perform matrix-vector products several times.
 
 The code which performs matrix-vector products is easily parallelizable
-as it requires to perform independent operations on different atoms at
-the same time. At the moment we have parallelized this code using
+as it requires performing independent operations on different atoms at
+the same time. At the moment, we have parallelized this code using
 OpenMP with good results. However, a parallelization using GPUs has
 never been tried.
 
-**Goal:** Writing a module for the ddX library which uses **CUDA** to
+**Goal:** writing a module for the ddX library which uses **CUDA** to
 accelerate ddCOSMO. This is achieved through the following steps:
   - identifying the critical arrays which should be stored in the GPU,
   - writing a CUDA kernel code for atom-atom interaction required by the
