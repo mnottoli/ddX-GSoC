@@ -185,8 +185,6 @@ accelerate ddCOSMO. This is achieved through the following steps:
   ddCOSMO matrix-vector product,
   - writing a CUDA kernel code for the Jacobi/DIIS linear system solver.
 
-## Biblography
-
 [^1]: Arieh Warshel. “Computer Simulations of Enzyme Catalysis: Methods, Progress, and Insights.” Annual Review of Biophysics and Biomolecular Structure 32, no. 1 (June 2003): 425–43. https://doi.org/10.1146/annurev.biophys.32.110601.141807.
 
 [^2]: Jacopo Tomasi, Benedetta Mennucci, and Roberto Cammi. “Quantum Mechanical Continuum Solvation Models.” Chemical Reviews 105, no. 8 (August 2005): 2999–3094. https://doi.org/10.1021/cr9904009.
